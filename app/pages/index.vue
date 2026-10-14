@@ -1,76 +1,77 @@
+<script setup lang="ts">
+const { t } = useLocale()
+definePageMeta({
+  title: '總覽'
+})
+
+const modules = computed(() => [
+  {
+    title: t('nav.problemRecording'),
+    description: t('problems.record.pageTitle') + ': ' + t('problems.record.generateHint'),
+    to: '/problems/record',
+    status: t('index.primaryFlow')
+  },
+  {
+    title: t('nav.collaborativeCare'),
+    description: t('collaborativeCare.description'),
+    to: '/collaborative-care',
+    status: t('index.planned')
+  },
+  {
+    title: t('nav.tasks'),
+    description: t('tasks.description'),
+    to: '/tasks',
+    status: t('index.planned')
+  },
+  {
+    title: t('nav.documents'),
+    description: t('documents.description'),
+    to: '/documents',
+    status: t('index.planned')
+  }
+])
+</script>
+
 <template>
-  <div>
-    <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
-      :links="[{
-        label: 'Get started',
-        to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-        target: '_blank',
-        trailingIcon: 'i-lucide-arrow-right',
-        size: 'xl'
-      }, {
-        label: 'Use this template',
-        to: 'https://github.com/nuxt-ui-templates/starter',
-        target: '_blank',
-        icon: 'i-simple-icons-github',
-        size: 'xl',
-        color: 'neutral',
-        variant: 'subtle'
-      }]"
-    />
+  <div class="space-y-6">
+    <section class="rounded-2xl border border-brand-border bg-brand-card p-6 shadow-sm">
+      <p class="text-sm font-semibold uppercase tracking-wider text-brand-teal">
+        Hospital at Home
+      </p>
+      <h1 class="mt-2 text-3xl font-bold text-brand-navy">
+        {{ t('index.heroTitle') }}
+      </h1>
+      <p class="mt-3 max-w-3xl text-brand-muted">
+        {{ t('index.heroText') }}
+      </p>
+      <div class="mt-5">
+        <NuxtLink
+          to="/problems/record"
+          class="inline-flex rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white hover:bg-brand-navy/90 focus-visible:outline-2 focus-visible:outline-brand-navy"
+        >
+          {{ t('index.enterProblemRecording') }}
+        </NuxtLink>
+      </div>
+    </section>
 
-    <UPageSection
-      id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[{
-        icon: 'i-lucide-rocket',
-        title: 'Production-ready from day one',
-        description: 'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.'
-      }, {
-        icon: 'i-lucide-palette',
-        title: 'Beautiful by default',
-        description: 'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.'
-      }, {
-        icon: 'i-lucide-zap',
-        title: 'Lightning fast',
-        description: 'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.'
-      }, {
-        icon: 'i-lucide-blocks',
-        title: '100+ components included',
-        description: 'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.'
-      }, {
-        icon: 'i-lucide-code-2',
-        title: 'Developer experience first',
-        description: 'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.'
-      }, {
-        icon: 'i-lucide-shield-check',
-        title: 'Built for scale',
-        description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
-      }]"
-    />
-
-    <UPageSection>
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[{
-          label: 'Start building',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
-          trailingIcon: 'i-lucide-arrow-right',
-          color: 'neutral'
-        }, {
-          label: 'View on GitHub',
-          to: 'https://github.com/nuxt-ui-templates/starter',
-          target: '_blank',
-          icon: 'i-simple-icons-github',
-          color: 'neutral',
-          variant: 'outline'
-        }]"
-      />
-    </UPageSection>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <NuxtLink
+        v-for="module in modules"
+        :key="module.to"
+        :to="module.to"
+        class="rounded-xl border border-brand-border bg-brand-card p-5 shadow-sm transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-brand-navy"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <h2 class="text-lg font-bold text-brand-navy">{{ module.title }}</h2>
+          <span
+            class="rounded-full px-2 py-0.5 text-xs font-semibold"
+            :class="module.status === t('index.primaryFlow') ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
+          >
+            {{ module.status }}
+          </span>
+        </div>
+        <p class="mt-2 text-sm text-brand-muted">{{ module.description }}</p>
+      </NuxtLink>
+    </div>
   </div>
 </template>
